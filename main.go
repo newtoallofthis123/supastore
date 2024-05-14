@@ -6,20 +6,23 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 3 && os.Args[1] != "help" {
-		panic("Atleast 2 argument are needed! Try supastore help")
+	if len(os.Args) == 1 {
+		printHelp()
+		os.Exit(0)
 	}
-
 	if os.Args[1] == "help" {
 		printHelp()
 		os.Exit(0)
+	}
+	if len(os.Args) < 3 {
+		panic("Atleast 2 argument are needed! Try supastore help")
 	}
 
 	env := LoadEnv()
 	sc := NewStoreClient(env)
 
-	cmd := os.Args[1]
-	bucketName := os.Args[2]
+	cmd := os.Args[2]
+	bucketName := os.Args[1]
 	otherArgs := os.Args[3:]
 
 	switch cmd {
